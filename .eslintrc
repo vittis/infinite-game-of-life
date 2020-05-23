@@ -1,0 +1,43 @@
+// 20200523170739
+// https://raw.githubusercontent.com/vittis/bsb-360-api/master/.eslintrc
+
+{
+    "root": true,
+    "env": {
+      "node": true,
+      "es6": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended",
+      "prettier",
+      "prettier/@typescript-eslint"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json",
+      "tsconfigRootDir": "./"
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": [
+        "error"
+      ],
+      "@typescript-eslint/explicit-member-accessibility": 0,
+      "@typescript-eslint/no-parameter-properties": 0,
+      "@typescript-eslint/no-explicit-any": 0,
+      "@typescript-eslint/explicit-module-boundary-types": 0,
+      "@typescript-eslint/no-empty-function": 0
+    },
+    "overrides": [
+      {
+        "files": [
+          "*.spec.ts"
+        ]
+      }
+    ]
+  }
