@@ -1,7 +1,7 @@
 import produce from 'immer';
 
-const numRows = 13;
-const numCols = 13;
+export const numRows = 13;
+export const numCols = 13;
 
 const operations = [
   [0, 1],
@@ -13,26 +13,6 @@ const operations = [
   [1, 0],
   [-1, 0],
 ];
-
-const generateBoard = () => {
-  return Array.from({ length: numRows }, () => {
-    return Array.from({ length: numCols }, () => 0);
-  });
-  /* return [[0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0,0,1,0,0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [1,0,1,0,0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0,1,1,0,0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0]
-            ]  */
-};
 
 const printBoard = (board) => {
   console.clear();
@@ -49,6 +29,21 @@ const generateEmptyGrid = () => {
   }
   return rows;
 };
+/* return [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+]; */
 
 const countNeighbors = (grid: any, x: number, y: number) => {
   return operations.reduce((acc, [i, j]) => {
@@ -74,9 +69,9 @@ const nextGeneration = (g) => {
     }
   });
 };
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-//const initialBoard = generateBoard();
 const play = async (board) => {
   printBoard(board);
   const next = nextGeneration(board);
@@ -84,4 +79,4 @@ const play = async (board) => {
   play(next);
 };
 
-export { play, generateBoard, generateEmptyGrid };
+export { play, generateEmptyGrid };
