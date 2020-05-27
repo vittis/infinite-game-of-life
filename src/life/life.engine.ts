@@ -14,8 +14,8 @@ const operations = [
   [-1, 0],
 ];
 
-const printBoard = (board) => {
-  console.clear();
+export const printBoard = (board) => {
+  //console.clear();
   const lines = board
     .map((row) => row.join('').replace(/0/g, '0 ').replace(/1/g, 'X '))
     .join('\n');
@@ -54,7 +54,7 @@ const countNeighbors = (grid: any, x: number, y: number) => {
   }, 0);
 };
 
-const nextGeneration = (g) => {
+export const nextGeneration = (g) => {
   return produce(g, (gridCopy) => {
     for (let i = 0; i < numRows; i++) {
       for (let k = 0; k < numCols; k++) {

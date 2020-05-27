@@ -1,16 +1,18 @@
 import { Room, Client } from 'colyseus';
-import { Board } from './life.schema';
+import { Board, convertTo2dArray, convertTo1dArray } from './life.schema';
+import { nextGeneration, printBoard } from './life.engine';
 
 export class LifeRoom extends Room<Board> {
   onCreate() {
-    console.log('created');
     this.setState(new Board());
     this.state.initialize();
-    console.log(this.state.board);
 
-    this.onMessage('type', (client, message) => {
-      // handle "type" message
-    });
+    this.clock.setInterval(() => {
+      const next = nextGeneration(convertTo2dArray(this.state.board));
+      const newBoard = new Board();
+      newBoard.board = convertTo1dArray(next);
+      this.setState(newBoard);
+    }, 5000);
   }
 
   onJoin(client: Client, options: any) {}
