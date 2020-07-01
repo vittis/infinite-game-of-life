@@ -15,7 +15,11 @@ app.use(cors());
 app.use(express.json());
 
 app.use(function (req, res, next) {
-  res.redirect('https://' + req.hostname + req.url);
+  if (req.protocol === 'https') {
+    res.redirect('https://' + req.hostname + req.url);
+  } else {
+    next();
+  }
 });
 
 // Serve any static files
