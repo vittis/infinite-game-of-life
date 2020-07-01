@@ -1,11 +1,13 @@
 import http from 'http';
 import express from 'express';
 import cors from 'cors';
-import { Server } from 'colyseus';
+import { Server, matchMaker } from 'colyseus';
 import { monitor } from '@colyseus/monitor';
-// import socialRoutes from "@colyseus/social/express"
+
+import mongoose from 'mongoose';
 
 import { LifeRoom } from './src/life/life.room';
+import Generation from './src/db/generation';
 
 const port = Number(process.env.PORT || 2567);
 const app = express();
@@ -18,19 +20,30 @@ const gameServer = new Server({
   server,
 });
 
-// register your room handlers
-gameServer.define('life_room', LifeRoom);
+const connectDb = () => {
+  return mongoose.connect(
+    'mongodb+srv://vittis:p2sdFLYCp0buQBSB@gameoflife.6hhjn.mongodb.net/generations?retryWrites=true&w=majority',
+    {
+      useNewUrlParser: true,
+    },
+  );
+};
 
-/**
- * Register @colyseus/social routes
- *
- * - uncomment if you want to use default authentication (https://docs.colyseus.io/authentication/)
- * - also uncomment the import statement
- */
-// app.use("/", socialRoutes);
+const eraseDatabaseOnSync = false;
 
-// register colyseus monitor AFTER registering your room handlers
-app.use('/colyseus', monitor());
+connectDb().then(async () => {
+  if (eraseDatabaseOnSync) {
+    await Promise.all([Generation.deleteMany({})]);
+  }
+  const lastGen = await Generation.findOne({}).sort('_generation');
 
-gameServer.listen(port);
-console.log(`Listening on ws://localhost:${port}`);
+  gameServer.define('life_room', LifeRoom);
+  matchMaker.createRoom('life_room', {
+    generation: lastGen ? lastGen.generation : undefined,
+    board: lastGen ? lastGen.board : undefined,
+  });
+
+  app.use('/colyseus', monitor());
+  gameServer.listen(port);
+  console.log(`Listening on ws:__localhost:${port}`);
+});

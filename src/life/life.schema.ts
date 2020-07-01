@@ -27,6 +27,12 @@ export class Board extends Schema {
   @type(['number'])
   board: ArraySchema<number>;
 
+  @type('number')
+  generation = 0;
+
+  @type('number')
+  timer = 10;
+
   initialize() {
     const grid = generateEmptyGrid();
     this.board = convertTo1dArray(grid);

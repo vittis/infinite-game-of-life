@@ -1,7 +1,7 @@
 import produce from 'immer';
 
-export const numRows = 13;
-export const numCols = 13;
+export const numRows = 5;
+export const numCols = 5;
 
 const operations = [
   [0, 1],
@@ -14,14 +14,6 @@ const operations = [
   [-1, 0],
 ];
 
-export const printBoard = (board) => {
-  //console.clear();
-  const lines = board
-    .map((row) => row.join('').replace(/0/g, '0 ').replace(/1/g, 'X '))
-    .join('\n');
-  console.log(lines);
-};
-
 const generateEmptyGrid = () => {
   const rows = [];
   for (let i = 0; i < numRows; i++) {
@@ -29,21 +21,6 @@ const generateEmptyGrid = () => {
   }
   return rows;
 };
-/* return [
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-]; */
 
 const countNeighbors = (grid: any, x: number, y: number) => {
   return operations.reduce((acc, [i, j]) => {
@@ -73,7 +50,6 @@ export const nextGeneration = (g) => {
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const play = async (board) => {
-  printBoard(board);
   const next = nextGeneration(board);
   await sleep(100);
   play(next);
