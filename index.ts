@@ -3,17 +3,23 @@ import express from 'express';
 import cors from 'cors';
 import { Server, matchMaker } from 'colyseus';
 import { monitor } from '@colyseus/monitor';
-
 import mongoose from 'mongoose';
-
 import { LifeRoom } from './src/life/life.room';
 import Generation from './src/db/generation';
+import * as path from 'path';
 
 const port = Number(process.env.PORT || 2567);
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Serve any static files
+app.use(express.static(path.join(__dirname, 'build')));
+// Handle React routing, return all requests to React app
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 const server = http.createServer(app);
 const gameServer = new Server({
