@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use(function (req, res, next) {
-  if (req.protocol === 'https') {
+  if (req.protocol === 'http') {
     res.redirect('https://' + req.hostname + req.url);
   } else {
     next();
