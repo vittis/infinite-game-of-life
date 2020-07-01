@@ -14,6 +14,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use(function (req, res, next) {
+  res.redirect('https://' + req.hostname + req.url);
+});
+
 // Serve any static files
 app.use(express.static(path.join(__dirname, 'build')));
 // Handle React routing, return all requests to React app
