@@ -8,7 +8,7 @@ import { LifeRoom } from './src/life/life.room';
 import Generation from './src/db/generation';
 import * as path from 'path';
 
-const port = Number(process.env.PORT || 2567);
+const port = Number(2567);
 const app = express();
 
 app.use(cors());
