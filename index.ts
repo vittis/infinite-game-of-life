@@ -38,15 +38,14 @@ const connectDb = () => {
 const eraseDatabaseOnSync = false;
 
 connectDb().then(async () => {
-  let lastGen;
+  let lastGen: { generation: any; board: any };
   try {
     if (eraseDatabaseOnSync) {
       await Promise.all([Generation.deleteMany({})]);
     }
-    lastGen = await Generation.findOne({}).sort('_generation');
+    lastGen = await Generation.findOne({}).sort('-generation');
     // eslint-disable-next-line no-empty
   } catch (e) {}
-
   gameServer.define('life_room', LifeRoom);
   matchMaker.createRoom('life_room', {
     generation: lastGen ? lastGen.generation : undefined,

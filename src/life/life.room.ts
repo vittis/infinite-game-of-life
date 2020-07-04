@@ -47,6 +47,8 @@ export class LifeRoom extends Room<Board> {
       newBoard.timer = MAX_TIMER;
       TIMER = MAX_TIMER;
       this.setState(newBoard);
+      const allGens = await Generation.find();
+      this.broadcast('receive_all', { allGens, state: newBoard });
     }, 10000);
 
     this.clock.setInterval(() => {
@@ -57,7 +59,7 @@ export class LifeRoom extends Room<Board> {
 
   async onJoin(client: Client, options: any) {
     const allGens = await Generation.find();
-    client.send('receive_all', allGens);
+    client.send('receive_all', { allGens, state: this.state });
   }
 
   onLeave(client: Client, consented: boolean) {}
