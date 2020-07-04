@@ -8,7 +8,7 @@ const saveGeneration = async (generation, board) => {
   await Gen.save();
 };
 
-const MAX_TIMER = 10;
+const MAX_TIMER = 20;
 let TIMER = MAX_TIMER;
 
 export class LifeRoom extends Room<Board> {
@@ -49,7 +49,7 @@ export class LifeRoom extends Room<Board> {
       this.setState(newBoard);
       const allGens = await Generation.find();
       this.broadcast('receive_all', { allGens, state: newBoard });
-    }, 10000);
+    }, 20000);
 
     this.clock.setInterval(() => {
       TIMER -= 1;

@@ -1,7 +1,7 @@
 import produce from 'immer';
 
-export const numRows = 5;
-export const numCols = 5;
+export const numRows = 19;
+export const numCols = 19;
 
 const operations = [
   [0, 1],
