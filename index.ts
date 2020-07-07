@@ -17,8 +17,13 @@ app.use(express.json());
 // Serve any static files
 app.use(express.static(path.join(__dirname, 'build')));
 // Handle React routing, return all requests to React app
-app.get('*', function (req, res) {
+app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+app.get('/history', async function (req, res) {
+  const lastGen = await Generation.findOne({}).sort('-generation');
+  res.json({ totalGenerations: lastGen.generation });
 });
 
 const server = http.createServer(app);
