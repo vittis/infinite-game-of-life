@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  gol-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gol-api
+    volumes:
+      - .:/usr/app
+    expose:
+      - "${PORT:-2567}"
+    ports:
+      - "${PORT:-2567}:${PORT:-2567}"
+      - "9229:9229"
+    command: yarn start:dev
+    depends_on:
+      - mongo
+  mongo-express:
+    image: mongo-express
+    ports:
+      - ${MONGO_EXPRESS_PORT:-5555}:8081
+    environment:
+      ME_CONFIG_MONGODB_PORT: ${DB_PORT:-27017}
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_ADMINUSERNAME:-root}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_ADMINPASSWORD:-secret}
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ADMINUSERNAME:-root}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ADMINPASSWORD:-secret}
+    ports:
+      - "${DB_PORT:-27017}:${DB_PORT:-27017}"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
