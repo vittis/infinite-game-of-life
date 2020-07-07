@@ -13,7 +13,7 @@ services:
     ports:
       - "${PORT:-2567}:${PORT:-2567}"
       - "9229:9229"
-    command: yarn start:dev
+    command: npm start
     depends_on:
       - mongo
   mongo-express:
